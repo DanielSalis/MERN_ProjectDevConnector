@@ -1,10 +1,18 @@
 const express = require('express');
+const connecDB = require('./config/db');
 
 const app = express();
 
-app.get('/', (req, res) => {
-    res.send('hello');
-})
+//Connect Db
+connecDB();
+
+//Init Middleware
+app.use(express.json({ extend: false }));
+
+app.use('/api/users', require('./routes/api/users'));
+app.use('/api/auth', require('./routes/api/auth'));
+app.use('/api/profile', require('./routes/api/profile'));
+app.use('/api/posts', require('./routes/api/posts'));
 
 const PORT = process.env.PORT || 5000;
 
